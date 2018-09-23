@@ -43,7 +43,7 @@ std::future<typename std::result_of<F(Args...)>::type> ThreadPool::addTask(F&& f
             throw std::runtime_error("Trying to add new task to stopped ThreadPool");
         }
 
-        m_tasks.push([task] () mutable { (*task)(); });
+        m_tasks.emplace([task] () { (*task)(); });
     }
 
     m_cv.notify_one();
