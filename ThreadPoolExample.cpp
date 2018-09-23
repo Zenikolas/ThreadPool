@@ -4,7 +4,7 @@
 
 int main()
 {
-    constexpr size_t size = 1e5;
+    constexpr size_t size = 16e3;
     std::vector< std::future<size_t> > results;
     results.reserve(size);
 
