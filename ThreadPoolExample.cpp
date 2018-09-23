@@ -5,6 +5,7 @@
 int main()
 {
     constexpr size_t size = 16e3;
+    constexpr unsigned int Nsize = 10;
     std::vector< std::future<size_t> > results;
     results.reserve(size);
 
@@ -19,7 +20,7 @@ int main()
 
     auto start = std::chrono::high_resolution_clock::now();
 
-    threadUtils::ThreadPool thPool(10);
+    threadUtils::ThreadPool thPool(Nsize);
 
     for (size_t i = 0; i < size; ++i) {
         results.emplace_back( thPool.addTask(func, i * 200) );
