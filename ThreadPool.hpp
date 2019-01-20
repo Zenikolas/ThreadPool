@@ -5,6 +5,7 @@
 #include <functional>
 #include <future>
 #include <queue>
+#include <memory>
 
 namespace threadUtils
 {
@@ -34,7 +35,7 @@ template<class F, class ... Args>
 std::future<typename std::result_of<F(Args...)>::type> ThreadPool::addTask(F&& f, Args&&... args)
 {
     using retType = typename std::result_of<F(Args ...)>::type;
-    auto task = std::make_shared< std::packaged_task<retType()> >([f, args...] () { return f(args...); });
+    auto task = std::make_shared< std::packaged_task<retType()> >([f=f, args...] () { return f(std::move(args)...); });
     auto ret = task->get_future();
 
     {
